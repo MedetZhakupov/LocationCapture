@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-parcelize")
-    `maven-publish`
+    id("maven-publish")
 }
 
 android {
@@ -61,10 +60,10 @@ dependencies {
 
 publishing {
     publications {
-        register<MavenPublication>("release") { // Or any other name you prefer
+        register<MavenPublication>("release") {
             groupId = "dev.medetzhakupov"
             artifactId = "locationcapture"
-            version = "1.0.0"
+            version = "0.0.1"
 
             afterEvaluate {
                 from(components["release"])
