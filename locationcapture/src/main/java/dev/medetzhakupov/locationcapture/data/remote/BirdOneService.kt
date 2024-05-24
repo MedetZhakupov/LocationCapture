@@ -6,13 +6,12 @@ import dev.medetzhakupov.locationcapture.data.model.LocationUpdateResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 internal interface BirdOneService {
-    @Headers("Authorization: Bearer xdk8ih3kvw2c66isndihzke5")
+
     @POST("/auth")
-    suspend fun getToken(): AuthTokenResponse
+    suspend fun getToken(@Header("Authorization") apiKey: String): AuthTokenResponse
 
     @POST("/auth/refresh")
     suspend fun refreshToken(@Header("Authorization") refreshToken: String): AuthTokenResponse

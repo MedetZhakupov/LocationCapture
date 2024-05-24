@@ -7,18 +7,19 @@ import dev.medetzhakupov.locationcapture.data.model.AuthTokenResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class AccessTokenManagerTest {
 
+    private val apiKey = "API_KEY"
+
     private val authTokenStore: AuthTokenStore = FakeAuthTokenStore()
 
     private val birdOneService: BirdOneService = mockk()
 
-    private val accessTokenManager = AccessTokenManager(authTokenStore, birdOneService)
+    private val accessTokenManager = AccessTokenManager(apiKey, authTokenStore, birdOneService)
 
     @Test
     fun `test accessToken exists and not expired`() = runTest {
@@ -35,7 +36,7 @@ class AccessTokenManagerTest {
         val result = accessTokenManager.getAccessToken()
 
         assertEquals("existing_token", result)
-        coVerify(exactly = 0) { birdOneService.getToken() }
+        coVerify(exactly = 0) { birdOneService.getToken(any()) }
         coVerify(exactly = 0) { birdOneService.refreshToken(any()) }
     }
 
@@ -49,7 +50,7 @@ class AccessTokenManagerTest {
                 ),
                 "refresh_token"
             )
-        coEvery { birdOneService.getToken() } returns mockTokenResponse
+        coEvery { birdOneService.getToken("Bearer $apiKey") } returns mockTokenResponse
 
         val result = accessTokenManager.getAccessToken()
 

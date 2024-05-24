@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
 
     private val locationManager: LocationManager by lazy {
         LocationManagerBuilder(this.application)
+            .setApiKey(BuildConfig.API_KEY)
             .setCoroutineScope(lifecycle.coroutineScope)
             .build()
     }

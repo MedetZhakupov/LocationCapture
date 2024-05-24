@@ -5,6 +5,7 @@ import dev.medetzhakupov.locationcapture.data.cache.AuthTokenStore
 
 
 internal class AccessTokenManager(
+    private val apiKey: String,
     private val authTokenStore: AuthTokenStore,
     private val birdOneService: BirdOneService,
 ) {
@@ -17,7 +18,7 @@ internal class AccessTokenManager(
         val accessToken = authTokenStore.getAccessToken()
 
         if (accessToken == null) {
-            authTokenStore.saveAuthTokenResponse(birdOneService.getToken())
+            authTokenStore.saveAuthTokenResponse(birdOneService.getToken("Bearer $apiKey"))
             return requireNotNull(authTokenStore.getAccessToken())
         }
 
