@@ -19,7 +19,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "API_KEY", '"' + System.getenv("BIRD_API_KEY") + '"')
+        buildConfigField("String", "API_KEY", '"' + (System.getenv("BIRD_API_KEY") ?: "") + '"')
     }
 
     buildTypes {
